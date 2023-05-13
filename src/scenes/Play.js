@@ -2,17 +2,22 @@ class Play extends Phaser.Scene {
     constructor() {
         super("playScene");
     }
-    timedEvent;
 
     preload() {
         // load images/tile sprites
-        
+        this.load.image('shark', './assets/shark.png');
+        this.load.image('fish1', './assets/fish1.png');
     }
 
     create() {
         if (game.settings.audioPlaying == false) {
             game.settings.audioPlaying = true;
         }
+
+        this.shark = new Shark(this, game.config.width/2, game.config.height - borderUISize - borderPadding - 150, 'shark').setOrigin(0.5, 0);
+        this.shark.setScale(2.5);
+
+        this.fish = new Fish(this, game.config.width + borderUISize*6, borderUISize*4, 'fish1', 0, 30, 4).setOrigin(0, 0);
 
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
@@ -57,7 +62,8 @@ class Play extends Phaser.Scene {
         }
 
         if (!this.gameOver) {               
-
+            this.shark.update();
+            this.fish.update();
         } 
     }
 }

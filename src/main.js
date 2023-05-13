@@ -1,8 +1,8 @@
 let config = {
     parent: 'myGame',
     type: Phaser.AUTO,
-    height: 960,
-    width: 720,
+    height: 768,
+    width: 576,
     scale: {
         autoCenter: Phaser.Scale.CENTER_BOTH
     },
@@ -26,5 +26,6 @@ let borderUISize = game.config.height / 15;
 let borderPadding = borderUISize / 3;
 
 let Ready, playButton;
+let timedEvent;
 
 let keyLEFT, keyRIGHT;
