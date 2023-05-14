@@ -4,6 +4,7 @@ class Menu extends Phaser.Scene {
     }
 
     preload() {
+        this.load.image('title', './assets/title.png');
         // load audio
         //hmmm101's pixel song #13
         this.load.audio('backgroundmusic', './assets/pixelsong.wav');
@@ -13,14 +14,17 @@ class Menu extends Phaser.Scene {
         this.load.audio('sharkChomp2', './assets/chomp2.wav');
         //Jofae "Bite"
         this.load.audio('sharkChomp3', './assets/chomp3.mp3');
+        //Kenneth_Cooney "LevelUp"
+        this.load.audio('levelup', './assets/levelup.wav');
 
       }
     create() {
+        this.add.tileSprite(0, 0, 576, 768, 'title').setOrigin(0, 0);
         let menuConfig = {
             fontFamily: 'Georgia',
             fontSize: '75px',
-            backgroundColor: '#cf7bed',
-            color: '#501bab',
+            backgroundColor: '#ADD8E6',
+            color: '#00008B',
             align: 'right',
             padding: {
                 top: 15,
@@ -38,7 +42,8 @@ class Menu extends Phaser.Scene {
         const playButton = this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding - 60, 'PLAY', menuConfig).setOrigin(0.5).setInteractive();
         menuConfig.fontSize = '28px';
         menuConfig.fontFamily = 'Arial';
-        this.add.text(game.config.width/2, game.config.height/2, 'Keyboard: Arrow Keys to move', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2 - 10, 'Keyboard: Arrow Keys to move', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2 + 65, 'EAT FISH! AVOID ORCA!', menuConfig).setOrigin(0.5);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
@@ -52,10 +57,6 @@ class Menu extends Phaser.Scene {
     }
     update() {
         if (Ready == true) {
-            game.settings = {
-              highScore: 0,
-              audioPlaying: false
-            }
             this.scene.start('playScene');
         }
       }

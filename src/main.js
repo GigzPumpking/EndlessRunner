@@ -33,8 +33,11 @@ let orca = null;
 
 let spawnFrequency = 2;
 
-let highScore;
+let highScore = 0;
 let newHighScore = false;
+let audioPlaying = false;
+
+let fishEaten = false;
 
 let centerX = game.config.width/2;
 let centerY = game.config.height/2;

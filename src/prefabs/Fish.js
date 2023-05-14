@@ -17,6 +17,7 @@ class Fish extends Phaser.Physics.Arcade.Sprite {
 
     eaten() {
         p1Score += this.points;
+        fishEaten = true;
         let randSfx = Phaser.Math.Between(1, 3);
         this.parentScene.sound.play('sharkChomp'+randSfx, { volume: 0.25 });
         this.spawnNew();
@@ -49,7 +50,7 @@ class Fish extends Phaser.Physics.Arcade.Sprite {
             this.destroy();
         }
 
-        if (this.x <= this.shark.x + this.shark.width && this.x >= this.shark.x-this.shark.width && this.y <= this.shark.y + this.shark.height && this.y >= this.shark.y-this.shark.height) {
+        if (this.x <= this.shark.x + this.shark.width*1.3 && this.x >= this.shark.x-this.shark.width*1.3 && this.y <= this.shark.y + this.shark.height*1.3 && this.y >= this.shark.y-this.shark.height*1.3) {
             this.eaten();
         }
 

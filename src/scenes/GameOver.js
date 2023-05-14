@@ -48,10 +48,10 @@ class GameOver extends Phaser.Scene {
 
         // add GAME OVER text
         if(newHighScore) {
-            this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding - 220, 'New Hi-Score!', textConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding - 220, 'New High Score!', textConfig).setOrigin(0.5);
         }
         this.add.text(centerX, centerY + textSpacer*3, `Ate ${p1Score} points worth of fish`, textConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY + textSpacer*4,`This browser's best: ${highScore}s`, textConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY + textSpacer*4,`This browser's best: ${highScore}`, textConfig).setOrigin(0.5);
         this.add.text(centerX, centerY + textSpacer*5, `Press R to Restart`, textConfig).setOrigin(0.5);
     }
 

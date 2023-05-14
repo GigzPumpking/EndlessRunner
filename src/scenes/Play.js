@@ -13,26 +13,21 @@ class Play extends Phaser.Scene {
     }
 
     create() {
-
-        if (game.settings.audioPlaying == false) {
-            let backgroundMusic = this.sound.add('backgroundmusic');
-            backgroundMusic.loop = true;
-            backgroundMusic.play();
-            game.settings.audioPlaying = true;
-        }
+        this.scale = 1;
+        this.accel = 150;
 
         this.ocean = this.add.tileSprite(0, 0, 576, 768, 'ocean').setOrigin(0, 0);
 
         shark = new Shark(this, game.config.width/2, game.config.height - borderUISize - borderPadding - 150, 'shark').setOrigin(0.5, 0);
         shark.setScale(2);
 
-        orca = this.physics.add.sprite(game.config.width + borderUISize*6, borderUISize*6, 'orcaAtlas', 'front')
-            .setScale(2.5)
-            .setAcceleration(300);
+        orca = this.physics.add.sprite(game.config.width + borderUISize*6, borderUISize*6, 'orcaAtlas', 'orca1')
+            .setScale(this.scale)
+            .setAcceleration(this.accel);
         orca.body
             .setBounce(1, 1)
             .setCollideWorldBounds(true)
-            .setMaxSpeed(300);
+            .setMaxSpeed(150);
 
         this.fishGroup = this.add.group({
             runChildUpdate: true    // make sure update runs on group children
@@ -41,9 +36,9 @@ class Play extends Phaser.Scene {
         this.timer = this.time.addEvent({delay: spawnFrequency*1000, callback: this.addFish(), callbackScope: this, loop: true });
 
         this.anims.create({
-            key: 'move',
+            key: 'orca',
             frames: this.anims.generateFrameNames('orcaAtlas', {
-                prefix: 'move',
+                prefix: 'orca',
                 start: 1,
                 end: 3,
             }),
@@ -72,11 +67,11 @@ class Play extends Phaser.Scene {
             fixedWidth: 130
         }
 
-        const highScoreConfig = Object.assign({}, scoreConfig, { fixedWidth: 180, align: 'right' });
+        const highScoreConfig = Object.assign({}, scoreConfig, { fixedWidth: 180, align: 'left' });
 
         this.scoreLeft = this.add.text(borderUISize + borderPadding - 40, borderUISize + borderPadding - 50, 'Score: '+ p1Score, scoreConfig);
 
-        this.scoreRight = this.add.text(game.config.width - borderUISize - borderPadding*9, borderUISize + borderPadding - 50, 'High Score: '+ game.settings.highScore, highScoreConfig);
+        this.scoreRight = this.add.text(game.config.width - borderUISize - borderPadding*9, borderUISize + borderPadding - 50, 'High Score: '+ highScore, highScoreConfig);
         
         // GAME OVER flag
         this.gameOver = false;
@@ -85,12 +80,24 @@ class Play extends Phaser.Scene {
     }
 
     update() {
+        if (fishEaten == true) {
+            this.orcaGreat();
+            fishEaten = false;
+        }
+        orca.scale = this.scale;
+        orca.accel = this.accel;
+        if (audioPlaying == false) {
+            let backgroundMusic = this.sound.add('backgroundmusic');
+            backgroundMusic.loop = true;
+            backgroundMusic.play();
+            audioPlaying = true;
+        }
         this.physics.accelerateToObject(orca, shark, 100);
         let angle = Phaser.Math.RAD_TO_DEG * Phaser.Math.Angle.Between(orca.x, orca.y, shark.x, shark.y);
-        if (orca.rotation > angle) {
+        if (orca.rotation > angle && angle > -Math.PI/2) {
             orca.rotation -= 0.01;
         }
-        else if (orca.rotation < angle) {
+        else if (orca.rotation < angle && angle < Math.PI/2) {
             orca.rotation += 0.01;
         }
 
@@ -98,11 +105,13 @@ class Play extends Phaser.Scene {
             orca.flipX = true;
         }
         else orca.flipX = false;
-        orca.anims.play('walk', true);
+        orca.anims.play('orca', true);
         this.ocean.tilePositionY -= 4;
         this.scoreLeft.setText('Score: '+p1Score);
 
         if (this.gameOver) {
+            this.game.sound.stopAll();
+            audioPlaying = false;
             this.scene.start("gameOverScene");
         }
 
@@ -110,6 +119,22 @@ class Play extends Phaser.Scene {
             shark.update();
             this.physics.world.collide(shark, orca, this.orcaCollision, null, this);
         } 
+    }
+
+    orcaGreat() {
+        if(p1Score % 50 == 0) {
+            this.sound.play('levelup', { volume: 0.5 });  
+            if(this.accel < 600 && orca.MaxSpeed < 600) { 
+                this.accel += 5; 
+                orca.setMaxSpeed += 5;
+            }
+            if(this.scale < 3) {
+                this.scale += 0.1;
+            }
+
+            // cam shake: .shake( [duration] [, intensity] )
+            this.cameras.main.shake(100, 0.01);
+        }
     }
 
     addFish() {
