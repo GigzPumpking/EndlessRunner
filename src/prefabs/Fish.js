@@ -17,7 +17,7 @@ class Fish extends Phaser.Physics.Arcade.Sprite {
 
     eaten() {
         p1Score += this.points;
-        fishEaten = true;
+        this.parentScene.orcaGreat();
         let randSfx = Phaser.Math.Between(1, 3);
         this.parentScene.sound.play('sharkChomp'+randSfx, { volume: 0.25 });
         this.spawnNew();

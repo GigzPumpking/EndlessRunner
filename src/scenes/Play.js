@@ -81,10 +81,6 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-        if (fishEaten == true) {
-            this.orcaGreat();
-            fishEaten = false;
-        }
         orca.scale = this.scale;
         orca.accel = this.accel;
         orca.body.setMaxSpeed(this.maxSpeed);
