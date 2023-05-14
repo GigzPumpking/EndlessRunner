@@ -1,3 +1,29 @@
+/*
+Hung Nguyen
+
+Sea Sprint
+
+Around 25 hours taken
+
+For my game, you can play as a shark that can move around the entire map, which is scrolling downwards.
+
+The shark will rotate based on your movement and will also accelerate given that you are still moving.
+
+For my Endless Runner, I chose the approach of you collecting points (eating fish) while avoiding a threat that is constantly chasing you.
+
+I got the idea from the accelerateTo Phaser 3 example. I created an Orca, the natural predator of sharks, and I had it constantly accelerate towards the player.
+
+It's fairly easy to dodge since it has a lot of "drift" (if I'm labeling it correctly).
+
+If the Orca collides with the player, the player is eaten. Yes, this is a eat, or be eaten game.
+
+Ironically, the scaling difficulty part of the game comes from you eating enough fish. Every 5 fish you eat, the Orca gets stronger.. somehow.
+
+It grows slightly bigger and it can move slightly faster.
+
+You just keep eating fish and hope that the Orca does not catch you.
+*/
+
 let config = {
     parent: 'myGame',
     type: Phaser.AUTO,
