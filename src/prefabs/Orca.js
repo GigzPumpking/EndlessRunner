@@ -27,7 +27,4 @@ class Orca extends Phaser.Physics.Arcade.Sprite {
         }
         else this.flipX = false;
     }
-
-    reset() {
-    }
 }

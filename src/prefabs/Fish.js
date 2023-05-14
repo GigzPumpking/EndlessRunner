@@ -12,7 +12,6 @@ class Fish extends Phaser.Physics.Arcade.Sprite {
         this.points = pointValue;
         this.moveSpeed = speed;
         this.randDirec = Phaser.Math.Between(0, 1);
-        this.newFish = true; 
         this.rotation = Math.PI/2;
     }
 
@@ -20,15 +19,15 @@ class Fish extends Phaser.Physics.Arcade.Sprite {
         p1Score += this.points;
         let randSfx = Phaser.Math.Between(1, 3);
         this.parentScene.sound.play('sharkChomp'+randSfx, { volume: 0.25 });
+        this.spawnNew();
         this.destroy();
     }
 
+    spawnNew() {
+        this.parentScene.addFish(this.parent, this.speed);
+    }
+
     update() {
-        if(this.newFish && this.y > centerY) {
-            // (recursively) call parent scene method from this context
-            this.parentScene.addFish(this.parent, this.speed);
-            this.newFish = false;
-        }
 
         this.y += this.moveSpeed;
 
@@ -46,6 +45,7 @@ class Fish extends Phaser.Physics.Arcade.Sprite {
         }
 
         if(this.y > game.config.height) {
+            this.spawnNew();
             this.destroy();
         }
 

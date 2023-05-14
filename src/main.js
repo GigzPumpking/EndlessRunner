@@ -16,7 +16,7 @@ let config = {
             }
         }
     },
-    scene: [ Menu, Play ]
+    scene: [ Menu, Play, GameOver ]
 }
 
 // define game
@@ -29,12 +29,18 @@ let Ready, playButton;
 let timedEvent;
 
 let shark = null;
+let orca = null;
 
 let spawnFrequency = 2;
+
+let highScore;
+let newHighScore = false;
 
 let centerX = game.config.width/2;
 let centerY = game.config.height/2;
 
 let keyLEFT, keyRIGHT, keyDOWN, keyUP, keyR;
+
+const textSpacer = 64;
 
 let p1Score = 0;
