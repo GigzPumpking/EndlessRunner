@@ -19,7 +19,7 @@ class Play extends Phaser.Scene {
         this.ocean = this.add.tileSprite(0, 0, 576, 768, 'ocean').setOrigin(0, 0);
 
         shark = new Shark(this, game.config.width/2, game.config.height - borderUISize - borderPadding - 150, 'shark').setOrigin(0.5, 0);
-        shark.setScale(2);
+        shark.setScale(1.5);
 
         orca = this.physics.add.sprite(game.config.width + borderUISize*6, borderUISize*6, 'orcaAtlas', 'orca1')
             .setScale(this.scale)

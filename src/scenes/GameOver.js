@@ -22,6 +22,19 @@ class GameOver extends Phaser.Scene {
             },
             fixedWidth: 0
         }
+        let creditsConfig = {
+            fontFamily: 'Georgia',
+            fontSize: '16px',
+            color: '#808080',
+            align: 'right',
+            padding: {
+                top: 15,
+                bottom: 15,
+                right: 15,
+                left: 15
+            },
+            fixedWidth: 0
+        }
         this.background = this.add.tileSprite(0, 0, 576, 768, 'gameover').setOrigin(0, 0);
         // check for high score in local storage
         // uncomment console.log statements if you need to debug local storage
@@ -50,6 +63,9 @@ class GameOver extends Phaser.Scene {
         if(newHighScore) {
             this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding - 220, 'New High Score!', textConfig).setOrigin(0.5);
         }
+        this.add.text(centerX, centerY + textSpacer, `Credits: All music and sfx from freesound.org`, creditsConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY + textSpacer*1.5, `BG: hmmm101, LevelUp: Kenneth_Cooney`, creditsConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY + textSpacer*2, `Chomps: TheDragonsSpark, Ollie Bacon, Jofae`, creditsConfig).setOrigin(0.5);
         this.add.text(centerX, centerY + textSpacer*3, `Ate ${p1Score} points worth of fish`, textConfig).setOrigin(0.5);
         this.add.text(centerX, centerY + textSpacer*4,`This browser's best: ${highScore}`, textConfig).setOrigin(0.5);
         this.add.text(centerX, centerY + textSpacer*5, `Press R to Restart`, textConfig).setOrigin(0.5);
