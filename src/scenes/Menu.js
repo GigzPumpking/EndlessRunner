@@ -5,6 +5,14 @@ class Menu extends Phaser.Scene {
 
     preload() {
         // load audio
+        //hmmm101's pixel song #13
+        this.load.audio('backgroundmusic', './assets/pixelsong.wav');
+        //TheDragonsSpark "Nom Noise"
+        this.load.audio('sharkChomp1', './assets/chomp.wav');
+        //Ollie Bacon "Bite"
+        this.load.audio('sharkChomp2', './assets/chomp2.wav');
+        //Jofae "Bite"
+        this.load.audio('sharkChomp3', './assets/chomp3.mp3');
 
       }
     create() {
@@ -33,7 +41,7 @@ class Menu extends Phaser.Scene {
         this.add.text(game.config.width/2, game.config.height/2, 'Keyboard: Arrow Keys to move', menuConfig).setOrigin(0.5);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-        
+
         Ready = false;
         playButton.on('pointerdown', function (pointer)
         {

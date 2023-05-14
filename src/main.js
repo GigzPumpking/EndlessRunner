@@ -28,4 +28,13 @@ let borderPadding = borderUISize / 3;
 let Ready, playButton;
 let timedEvent;
 
-let keyLEFT, keyRIGHT;
+let shark = null;
+
+let spawnFrequency = 2;
+
+let centerX = game.config.width/2;
+let centerY = game.config.height/2;
+
+let keyLEFT, keyRIGHT, keyDOWN, keyUP, keyR;
+
+let p1Score = 0;

@@ -3,31 +3,46 @@ class Shark extends Phaser.GameObjects.Sprite {
         super(scene, x, y, texture, frame);
 
         //add object to existing scene
+        this.parentScene = scene;
         this.moveSpeed = 2;
         this.moving = false;
-        scene.add.existing(this);
+        this.parentScene.add.existing(this);
+        this.parentScene.physics.add.existing(this);
+
+        this.body.setBounce(1, 1).setCollideWorldBounds(true);
     }
 
     update() {
-        if (keyLEFT.isDown && this.x >= borderUISize + this.width/2) {
+        if (keyLEFT.isDown) {
             this.x -= this.moveSpeed;
-            if (this.moveSpeed < 10) {
-                this.moveSpeed += 0.1;
-            }
+            if (this.moveSpeed < 10) this.moveSpeed += 0.1;
+            if (this.rotation > -Math.PI/2) this.rotation -= 0.02;
             this.moving = true;
-        } else if (keyRIGHT.isDown && this.x <= game.config.width - borderUISize - this.width/2) {
+        } else if (keyRIGHT.isDown) {
             this.x += this.moveSpeed;
-            if (this.moveSpeed < 10) {
-                this.moveSpeed += 0.1;
-            }
+            if (this.moveSpeed < 10) this.moveSpeed += 0.1;
+
+            if (this.rotation < Math.PI/2) this.rotation += 0.02;
             this.moving = true;
         }
-        else {
-            this.moving = false;
+
+        if (keyDOWN.isDown) {
+            this.y += this.moveSpeed;
+            if (this.moveSpeed < 10) this.moveSpeed += 0.1;
+        } else if (keyUP.isDown) {
+            this.y -= this.moveSpeed;
+            if (this.moveSpeed < 10) this.moveSpeed += 0.1;
         }
+
+        if (!keyLEFT.isDown && !keyRIGHT.isDown && !keyUP.isDown && !keyDOWN.isDown) this.moving = false;
         
         if (this.moving == false) {
-            this.moveSpeed = 2;
+            if (this.moveSpeed > 2) this.moveSpeed -= 0.1;
+            for (let i = 0; i < 5; i++) {
+                if (this.rotation < 0) this.rotation += 0.01;
+                else if (this.rotation > 0) this.rotation -= 0.01;
+            }
+            
         }
  
     }
