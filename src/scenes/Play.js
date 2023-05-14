@@ -14,7 +14,8 @@ class Play extends Phaser.Scene {
 
     create() {
         this.scale = 1;
-        this.accel = 150;
+        this.accel = 100;
+        this.maxSpeed = 200;
 
         this.ocean = this.add.tileSprite(0, 0, 576, 768, 'ocean').setOrigin(0, 0);
 
@@ -64,7 +65,7 @@ class Play extends Phaser.Scene {
               left: 5,
               right: 5
             },
-            fixedWidth: 130
+            fixedWidth: 140
         }
 
         const highScoreConfig = Object.assign({}, scoreConfig, { fixedWidth: 180, align: 'left' });
@@ -86,6 +87,7 @@ class Play extends Phaser.Scene {
         }
         orca.scale = this.scale;
         orca.accel = this.accel;
+        orca.body.setMaxSpeed(this.maxSpeed);
         if (audioPlaying == false) {
             let backgroundMusic = this.sound.add('backgroundmusic');
             backgroundMusic.loop = true;
@@ -124,9 +126,11 @@ class Play extends Phaser.Scene {
     orcaGreat() {
         if(p1Score % 50 == 0) {
             this.sound.play('levelup', { volume: 0.5 });  
-            if(this.accel < 600 && orca.MaxSpeed < 600) { 
+            if(this.accel < 300) { 
                 this.accel += 5; 
-                orca.setMaxSpeed += 5;
+            }
+            if(this.maxSpeed < 600) {
+                this.maxSpeed += 10;
             }
             if(this.scale < 3) {
                 this.scale += 0.1;
